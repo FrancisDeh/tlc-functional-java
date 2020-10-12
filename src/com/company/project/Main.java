@@ -23,6 +23,10 @@ public class Main {
         System.out.println("Subtraction " + subtraction);
         System.out.println("Power " + power);
 
+        //currying in java
+        Function<Integer, Function<Integer, Integer>> curryAdd = value -> value2 -> value + value2 + 2;
+        System.out.println(curryAdd.apply(5).apply(4));
+
 
     }
 
@@ -37,6 +41,7 @@ public class Main {
             case "power" -> powFunction.apply(value1, value2);
             default -> 0;
         };
-
     }
+
+
 }
