@@ -1,36 +1,42 @@
 package com.company.project;
 
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
-        System.out.println(performFunctionalCalculations("add", 1, 2));
-        System.out.println(performFunctionalCalculations("multiply", 1, 2));
-        System.out.println(performFunctionalCalculations("power", 1, 2));
+        //        Write a function that takes as its argument a String value describing an operation to be
+//        carried out
+//        on a pair of integers. For example, "add", "subtract", "power".
+//        Return a function that will perform the required operation on two Ints,
+//        returning an Int result.
+
+
+        Integer addition = calculate("add", 34, 78);
+        Integer subtraction = calculate("subtract", 34, 78);
+        Integer power = calculate("power", 34, 78);
+
+        System.out.println("Addition " + addition);
+        System.out.println("Subtraction " + subtraction);
+        System.out.println("Power " + power);
+
+
     }
 
-    public static Integer performFunctionalCalculations(String operation, int value1, int value2) {
-        BiFunction<Integer, Integer, Integer> operationFunction;
-        Integer result = 0;
-        // (i, t) -> i + t; sum
-        switch (operation.toLowerCase()) {
-            case "add" -> {
-                operationFunction = Integer::sum;
-                result = operationFunction.apply(value1, value2);
-            }
-            case "multiply" -> {
-                operationFunction = (i, t) -> i * t;
-                result = operationFunction.apply(value1, value2);
-            }
-            case "power" -> {
-                operationFunction = (i, t) -> (int) Math.pow(i, t);
-                result = operationFunction.apply(value1, value2);
-            }
-        }
+    public static Integer calculate(String operation, Integer value1, Integer value2) {
+        BiFunction<Integer, Integer, Integer> addFunction = Integer::sum;
+        BiFunction<Integer, Integer, Integer> subFunction = (val1, val2) -> val1 - val2;
+        BiFunction<Integer, Integer, Integer> powFunction = (val1, val2) -> (int) Math.pow(val1, val2);
 
-        return result;
+        return switch (operation) {
+            case "add" -> addFunction.apply(value1, value2);
+            case "subtract" -> subFunction.apply(value1, value2);
+            case "power" -> powFunction.apply(value1, value2);
+            default -> 0;
+        };
+
     }
 }
